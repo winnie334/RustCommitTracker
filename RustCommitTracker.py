@@ -13,14 +13,15 @@ class Commit:
 def getcommits(url):		# returns a list of classes, each class represents a commit.
 	source = requests.get(url)
 	soup = BeautifulSoup(source.text, "html.parser")
-	commits = soup.find_all('div', {'class' : 'media-content'})
+	commits = soup.find_all('div', {'class': 'media-content'})
 	commitlist = []
 	for commit in commits:
 		author = commit.find('small').text
-		text = commit.find('div', {'class' : 'pre'}).text
+		text = commit.find('div', {'class': 'pre'}).text.split('\n')
 		number = int(commit.find('a')['href'][1:])
-		c = Commit(author, text, number)
-		commitlist.append(c)
+		for line in text:
+			c = Commit(author, line, number)
+			commitlist.append(c)
 	return commitlist
 
 if __name__ == '__main__':
