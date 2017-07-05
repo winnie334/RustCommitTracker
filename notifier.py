@@ -1,3 +1,5 @@
+# all copied from the internet. I have no idea how this works.
+
 from win32api import *
 from win32gui import *
 import win32con

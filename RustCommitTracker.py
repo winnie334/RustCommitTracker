@@ -17,11 +17,10 @@ def getcommits(url):		# returns a list of classes, each class represents a commi
 	commitlist = []
 	for commit in commits:
 		author = commit.find('small').text
-		text = commit.find('div', {'class': 'pre'}).text.split('\n')
+		text = commit.find('div', {'class': 'pre'})
 		number = int(commit.find('a')['href'][1:])
-		for line in text:
-			c = Commit(author, line, number)
-			commitlist.append(c)
+		c = Commit(author, text, number)
+		commitlist.append(c)
 	return commitlist
 
 if __name__ == '__main__':
