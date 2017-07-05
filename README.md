@@ -30,7 +30,7 @@ That's it! You're now good to go.
 
 ## Parameters
 
-There are a few parameters you can adjust to make the program more enjoyable. They can be found in the RustCommitTracker.py file itself, on lines 27 and 28. There's probably a better way to do this, but this'll do just fine.
+There are a few parameters you can adjust to make the program more enjoyable. They can be found in the RustCommitTracker.py file itself, on lines 28 and 29. There's probably a better way to do this, but this'll do just fine.
 
   * Timeout
 
