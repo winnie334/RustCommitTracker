@@ -8,7 +8,7 @@ Or do you simply want to be the first poster in /r/playrust, for that sweet swee
 
 Look no further! RustCommitTracker notifies you any time a new commit is added.
 
-[gif will come here]
+![alt text](http://imgur.com/c5mticZ.gif "why are you reading this")
 
 ## Installation
 
