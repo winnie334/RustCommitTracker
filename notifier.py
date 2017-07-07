@@ -1,59 +1,43 @@
-# all copied from the internet. I have no idea how this works.
-
 from win32api import *
 from win32gui import *
 import win32con
-import sys, os
-import struct
+import sys
+import os
 import time
 
+
 class WindowsBalloonTip:
-    def __init__(self, title, msg, icon, rclass=0):
-        message_map = {
-                win32con.WM_DESTROY: self.OnDestroy,
-        }
-        # Register the Window class.
+    def __init__(self, title, msg):
+        message_map = {win32con.WM_DESTROY: self.OnDestroy, }
         wc = WNDCLASS()
         hinst = wc.hInstance = GetModuleHandle(None)
-        wc.lpszClassName = "PythonTaskbar"
-        wc.lpfnWndProc = message_map # could also specify a wndproc.
-        if rclass == 0:
-            self.classAtom = RegisterClass(wc)
-        else:
-            self.classAtom = rclass
-        # Create the Window.
+        wc.lpszClassName = 'PythonTaskbar'
+        wc.lpfnWndProc = message_map
+        class_atom = RegisterClass(wc)
         style = win32con.WS_OVERLAPPED | win32con.WS_SYSMENU
-        self.hwnd = CreateWindow( self.classAtom, "Taskbar", style, \
-                0, 0, win32con.CW_USEDEFAULT, win32con.CW_USEDEFAULT, \
-                0, 0, hinst, None)
+        self.hwnd = CreateWindow(class_atom, "Taskbar", style, 0, 0, win32con.CW_USEDEFAULT, win32con.CW_USEDEFAULT, 0,
+                                 0, hinst, None)
         UpdateWindow(self.hwnd)
-        iconPathName = icon
+        icon_path_name = os.path.abspath(os.path.join(sys.path[0], 'resources/rust_icon.ico'))
         icon_flags = win32con.LR_LOADFROMFILE | win32con.LR_DEFAULTSIZE
         try:
-           hicon = LoadImage(hinst, iconPathName, \
-                    win32con.IMAGE_ICON, 0, 0, icon_flags)
+            hicon = LoadImage(hinst, icon_path_name, win32con.IMAGE_ICON, 0, 0, icon_flags)
         except:
-          hicon = LoadIcon(0, win32con.IDI_APPLICATION)
+            hicon = LoadIcon(0, win32con.IDI_APPLICATION)
         flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
-        nid = (self.hwnd, 0, flags, win32con.WM_USER+20, hicon, "tooltip")
+        nid = (self.hwnd, 0, flags, win32con.WM_USER + 20, hicon, 'Tooltip')
         Shell_NotifyIcon(NIM_ADD, nid)
-        Shell_NotifyIcon(NIM_MODIFY, \
-                         (self.hwnd, 0, NIF_INFO, win32con.WM_USER+20,\
-                          hicon, "Balloon  tooltip",msg,200,title))
-          #self.show_balloon(title, msg)
-        time.sleep(6)
+        Shell_NotifyIcon(NIM_MODIFY,
+                         (self.hwnd, 0, NIF_INFO, win32con.WM_USER + 20, hicon, 'Balloon Tooltip', msg, 200, title))
+        time.sleep(5)
         DestroyWindow(self.hwnd)
+        class_atom = UnregisterClass(class_atom, hinst)
+
     def OnDestroy(self, hwnd, msg, wparam, lparam):
         nid = (self.hwnd, 0)
-        try:
-            Shell_NotifyIcon(NIM_DELETE, nid)
-        except:
-            pass
-        PostQuitMessage(0) # Terminate the app.
+        Shell_NotifyIcon(NIM_DELETE, nid)
+        PostQuitMessage(0)
 
-def balloon_tip(title, msg, icon, rclass=0):
-    w=WindowsBalloonTip(title, msg, icon, rclass)
-    return w.classAtom
 
-if __name__ == '__main__':
-    balloon_tip("Title for popup", "This is the popup's message", 'rusticon.ico')
+def balloon_tip(title, msg):
+    w=WindowsBalloonTip(title, msg)
