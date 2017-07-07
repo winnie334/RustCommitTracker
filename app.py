@@ -13,8 +13,8 @@ class Tracker(object):
     def update(self):
         feed = feedparser.parse(self.URL)
         current = feed.entries[0]
-        if self.commit < current.title.split('/')[-1]:
-            self.commit = current.title.split('/')[-1]
+        if self.commit < int(current.title.split('/')[-1]):
+            self.commit = int(current.title.split('/')[-1])
             balloon_tip(current.title, current.description)
 
     def fetch_update(self):
