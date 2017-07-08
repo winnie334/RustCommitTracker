@@ -1,0 +1,1 @@
+schtasks /create /tn "Rust Commit Tracker" /tr "C:\Users\USERNAME\AppData\Local\Programs\Python\Python36-32\pythonw.exe C:\RustCommitTracker\app.py" /sc ONLOGON

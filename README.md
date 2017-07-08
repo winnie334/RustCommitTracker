@@ -10,36 +10,27 @@ Look no further! RustCommitTracker notifies you any time a new commit is added.
 
 ![alt text](http://imgur.com/c5mticZ.gif "why are you reading this")
 
+## Requirements
+
+You must have Python 3 installed on a Windows 7, 8.1, 10 machine.
+
+After Python has been installed, navigate to the project folder you just downloaded from this repository then
+run the command **pip install -r requirements.txt** (you may have to run your command prompt as administrator)
+and that'll get you squared away with all the requirements.
+
 ## Installation
 
-*Note beforehand: this is the first time I'm doing this, so if you notice anything that could be improved, please tell me!*
+Move the project folder into your C drive as such "C:\RustCommitTracker" or wherever you'd like, actually.
 
-First off, download all these files and put them in a folder somewhere.
+Right click and edit **install.bat** then change the first file path inside the string to your Python 3 installation folder.
+Likely all you'll have to do is change **USERNAME** with your username and you'll be good to go.  
 
-Now, right click on the batch file and press 'edit'. Replace *C:\Users\winnie33\PycharmProjects\RustCommitTracker\RustCommitTracker.py* with the path to your .py file. This batch file will execute the program with pythonw, so it runs in the background without disturbing you.
+Don't know where Python is installed? Run **where python** in your command prompt.  
 
-After that, edit the .vbs file and change the path once again. Note that you must now insert the path to the **.bat file**, not the .py file. This Visual Basic Script will be executed when starting your computer. The reason we don't simply execute the .bat file is to prevent a window popping up each time we start our computer.
+From here, go ahead and right click the **install.bat** and run as an administrator (since we're creating a task, this requires admin privileges).
 
-To make this script run on startup, open a Run dialog box (Windows key + R) and type in the following:
+Every time you log on you'll receive the latest commit that has been published and be notified of it regardless as to
+how long ago the commit was actually made. So to finish up everything, log out of your account and log back in. You should see
+a notification pop up with the most recent commit published!
 
-*shell:startup*
-  
-Press enter and you'll see a folder appear. Cut and paste the .vbs file here. It will now execute each time on startup.
-
-That's it! You're now good to go.
-
-## Parameters
-
-There are a few parameters you can adjust to make the program more enjoyable. They can be found in the RustCommitTracker.py file itself, on lines 27 and 28. There's probably a better way to do this, but this'll do just fine.
-
-  * Timeout
-
-   This is the delay between each request to the Rust website. It's given in seconds, and defaults to 300 (5 minutes). Lowering this number will notify you even sooner of a new commit, but may be intensive for your internet.
-  
-  * Show private commits
-  
-  Sometimes a commit is marked private and will thus not show its text. If you want you can still be notified of these commits. Changing show_private to 1 will make the program notify you of every single new commit. Defaults to 0.
-  
-## Afterword
-
-This is my first time writing a program meant for distribution, so please forgive me for any mistakes. I definitely have the feeling I missed some important things, so if you could let me know it would be highly appreciated. Any improvements are of course welcome as well. Thanks for reading this and have a good day!
+This script will poll every 1 minute to check and see if there has been an update.
